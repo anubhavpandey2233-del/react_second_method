@@ -16,9 +16,9 @@ function Count(props) {
 
     return (
         <div>
-            <button onClick={() =>handledecrement()}>-</button>
+            <button onClick={() =>handledecrement()}disabled ={count==1}>-</button>
             {count}
-            <button onClick={()=>handleIncrement()}>+</button>
+            <button onClick={()=>handleIncrement()}disabled={count===5}>+</button>
         </div>
     );
 }

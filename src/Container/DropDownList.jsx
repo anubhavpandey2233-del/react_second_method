@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
+import City from './City';
 
 function DropDownList(props) {
 
-    const [country, setCountry] = useState()
+    const [countryName,setCountryName]=useState('')
 
+    //Fragment
     return (
+        <>
         <div>
-            <select name={country} id="ddl" onChange={(a) => setCountry(a.target.value)}>
-                <option value="0">---Select Anyone---</option>
+            <select name="country" onChange={(e)=>setCountryName(e.target.value)}>
+                <option value="0">--select Anyne--</option>
                 <option value="India">India</option>
                 <option value="Canada">Canada</option>
-                <option value="Japan">Japan</option>
-                <option value="Korea">Korea</option>
+                <option value="UK">UK</option>
             </select>
-
-            {
-                country && (
-                    <h3>My country is {country}</h3>
-                )
-            }
-
         </div>
+        <h3>My Country is:{countryName}</h3>
+
+        <City cityName={countryName}/>
+        </>
     );
 }
 
