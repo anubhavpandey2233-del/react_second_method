@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Timer extends Component {
 
-    //Create Components
+    //1 Intial value 
     constructor(props) {
         super(props);
 
@@ -16,13 +16,13 @@ class Timer extends Component {
 
     }
 
-    //3rd - fetch
+    //3rd - all after component,mount,data fetch, timer update 
 
     componentDidMount = () => {
         setInterval(this.tick, 1000)
     }
 
-    //4
+    //4 it is used to do work when state/props value changed
     componentDidUpdate=(prevProps,prevState)=>{
         console.log("prevstate is:",prevState.time);
         console.log("preProps is:",this.state.time);
@@ -33,7 +33,7 @@ class Timer extends Component {
         }
     }
 
-    //5
+    //5 it is used to realsed occupied resources call when we move to another component
     componentWillUnmount=()=>{
         console.log("componentWillUnmount");
         clearInterval(this.timeRef)
