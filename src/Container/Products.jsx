@@ -33,18 +33,13 @@ function Products(props) {
     }
 
 
-
     useEffect(() => {
         fetchProductData()
     }, [])
 
 
-
-
-
     const searchData = () => {
         console.log(sort);
-
 
         let searchData = pdata.filter((v) => v.title.toLowerCase().includes(search.toLowerCase()) ||
             v.description.toLowerCase().includes(search.toLowerCase()) ||
@@ -68,9 +63,6 @@ function Products(props) {
 
         return searchData
     }
-
-
-
 
     let finalData = searchData();
 
