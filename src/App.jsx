@@ -10,6 +10,11 @@ import CourseClass from './Container/CourseClass';
 import Timer from './Container/Timer';
 import TimerFunctionlifecycle from './Container/TimerFunctionlifecycle';
 import Products from './Container/Products';
+import ChangeBackground from './Container/ChangeBackground';
+import FormData from './Container/FormData';
+import Calculator from './Container/Calculator';
+import AscDscTitle from './Container/AscDscTitle';
+// import Theme from './Container/Theme';
 // import TimerFunction from './Container/TimerFunction';
 
 function App(props) {
@@ -38,13 +43,23 @@ function App(props) {
 
       {/* <Timer /> */}
 
-     
+
 
       {/* <TimerFunction/> */}
 
       {/* <TimerFunctionlifecycle/> */}
 
-      <Products/>
+      {/* <Products/> */}
+
+      {/* <ChangeBackground/> */}
+
+      {/* <Theme /> */}
+
+      {/* <FormData /> */}
+
+      {/* <Calculator/> */}
+
+      <AscDscTitle/>
     </div>
   );
 }
