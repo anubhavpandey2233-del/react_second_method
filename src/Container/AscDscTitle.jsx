@@ -17,13 +17,13 @@ function AscDscTitle(props) {
     console.log(ptitle)
 
 
-    const ascDscData = [...ptitle].sort((a, b) => (
-         sort ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title)
+    const ascDscData = ptitle.sort((a, b) => (
+        sort ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title)
 
-       
+
     ));
 
-   
+
 
     useEffect(() => {
         fetchProductTitle()

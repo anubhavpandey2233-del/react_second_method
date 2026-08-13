@@ -5,6 +5,10 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Pagination from 'react-bootstrap/Pagination';
+import { useParams } from 'react-router';
+
 
 
 function Products(props) {
@@ -13,6 +17,12 @@ function Products(props) {
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('');
     const [category, setCategory] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState('all')
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const {id}=useParams();
+    console.log(id);
+    
 
     const fetchProductData = async () => {
         const response = await fetch("https://fakestoreapi.com/products");
@@ -33,6 +43,7 @@ function Products(props) {
     }
 
 
+
     useEffect(() => {
         fetchProductData()
     }, [])
@@ -47,16 +58,23 @@ function Products(props) {
 
         )
 
+        console.log(searchData);
+
+
         if (sort === 'hl') {
-            pdata.sort((a, b) => a.price - b.price)
+            searchData.sort((a, b) => a.price - b.price)
         } else if (sort === 'lh') {
-            pdata.sort((a, b) => b.price - a.price)
+            searchData.sort((a, b) => b.price - a.price)
         }
         else if (sort === 'az') {
-            pdata.sort((a, b) => a.title.localeCompare(b.title))
+            searchData.sort((a, b) => a.title.localeCompare(b.title))
         }
         else if (sort === 'za') {
-            pdata.sort((a, b) => b.title.localeCompare(a.title))
+            searchData.sort((a, b) => b.title.localeCompare(a.title))
+        }
+
+        if (selectedCategory != 'all') {
+            searchData = searchData.filter((v) => v.category === selectedCategory)
         }
 
 
@@ -64,7 +82,27 @@ function Products(props) {
         return searchData
     }
 
+
+
     let finalData = searchData();
+
+    let perPage = 4;
+    let page = Math.ceil(finalData.length / perPage) //0
+
+    const pageData = () => {
+        //20   0-4    5-9    10-14     15-19
+        const startIndex = (currentPage - 1) * 4
+        const endIndex = startIndex + perPage - 1
+
+        console.log(startIndex, endIndex);
+
+
+        let x = finalData.slice(startIndex, endIndex + 1)
+        console.log(x);
+
+        return x;
+    }
+    let paginationPage = pageData();
 
     return (
         <section>
@@ -94,16 +132,40 @@ function Products(props) {
                     </div>
                 </div>
                 <div>
-                    <ToggleButtonGroup type="radio" name="options" defaultValue={1} onClick={(e) => setCategory(e.target.value)}>
+
+                    <ButtonGroup>
+                        <ToggleButton
+                            key={'all'}
+                            id={`radio-${'all'}`}
+                            type="radio"
+                            variant={'outline-success'}
+                            name="radio"
+                            value={'all'}
+                            checked={selectedCategory === 'all'}
+                            onChange={(e) => setSelectedCategory(e.currentTarget.value)}
+                        >
+                            {'all'}
+                        </ToggleButton>
                         {
-                            category.map((v) => (
-                                <ToggleButton id="tbg-radio-1" value={1}>
+
+                            category.map((v, i) => (
+                                <ToggleButton
+                                    key={i}
+                                    id={`radio-${i}`}
+                                    type="radio"
+                                    variant={'outline-success'}
+                                    name="radio"
+                                    value={v}
+                                    checked={selectedCategory === v}
+                                    onChange={(e) => setSelectedCategory(e.currentTarget.value)}
+                                >
                                     {v}
                                 </ToggleButton>
                             ))
+
                         }
 
-                    </ToggleButtonGroup>
+                    </ButtonGroup>
                 </div>
 
                 <div className='row' style={{ rowGap: '30px' }}>
@@ -111,29 +173,43 @@ function Products(props) {
 
 
                     {
-                        pdata === 0 ? <p>Loading...</p> :
-                            finalData?.map((v) => (
-                                <div className='col-3'>
+                        pdata.length === 0 ? <Spinner style={{ margin: '0 0 0 820px' }} /> :
+                            <>
+                                {paginationPage?.map((v) => (
+                                    <div className='col-3'>
 
-                                    <Card style={{ width: '18rem' }}>
-                                        <Card.Img variant="top" src={v.image} style={{ height: '250px' }} />
-                                        <Card.Body>
-                                            <Card.Title>{v.title.length > 20 ? v.title.substring(0, 20) + '...' : v.title}</Card.Title>
-                                            <Card.Text>
-                                                {v.price}
-                                            </Card.Text>
-                                            <Button variant="primary">Add to cart</Button>
-                                        </Card.Body>
-                                    </Card>
+                                        <Card style={{ width: '18rem' }}>
+                                            <Card.Img variant="top" src={v.image} style={{ height: '250px' }} />
+                                            <Card.Body>
+                                                <Card.Title>{v.title.length > 20 ? v.title.substring(0, 20) + '...' : v.title}</Card.Title>
+                                                <Card.Text>
+                                                    {v.price}
+                                                </Card.Text>
+                                                <Button variant="primary">Add to cart</Button>
+                                            </Card.Body>
+                                        </Card>
 
-                                </div>
-                            ))
+                                    </div>
+                                ))}
 
+                                <Pagination>
+
+                                    <Pagination.Prev onClick={() => setCurrentPage(currentPage-1)}disabled={currentPage===1} />
+                                    {
+                                        Array.from({ length: page }, (_, i) =>
+
+                                            <Pagination.Item onClick={() => setCurrentPage(i+1)} active={currentPage==i+1}>{i + 1}</Pagination.Item>)
+                                    }
+
+                                    <Pagination.Next onClick={() => setCurrentPage(currentPage+1)}disabled={currentPage===page} />
+
+                                </Pagination>
+                            </>
                     }
                 </div>
             </div>
 
-            <Spinner style={{ margin: '0 0 0 820px' }} />
+
         </section >
 
     );

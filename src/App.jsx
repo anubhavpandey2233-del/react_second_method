@@ -9,17 +9,27 @@ import Course from './Container/Course';
 import CourseClass from './Container/CourseClass';
 import Timer from './Container/Timer';
 import TimerFunctionlifecycle from './Container/TimerFunctionlifecycle';
-import Products from './Container/Products';
 import ChangeBackground from './Container/ChangeBackground';
 import FormData from './Container/FormData';
 import Calculator from './Container/Calculator';
 import AscDscTitle from './Container/AscDscTitle';
+import Products from './Container/Products';
+import { Route, Routes } from 'react-router';
+import Header from './component/Header';
 // import Theme from './Container/Theme';
 // import TimerFunction from './Container/TimerFunction';
 
 function App(props) {
   return (
     <div>
+      <Header />
+
+      <Routes>
+        <Route path='/count' element={<Count />} />
+        <Route path='/password' element={<Password />} />
+        <Route path='/products/:id' element={<Products />} />
+
+      </Routes>
       {/* <Count/> */}
       {/* <Password/> */}
 
@@ -59,7 +69,7 @@ function App(props) {
 
       {/* <Calculator/> */}
 
-      <AscDscTitle/>
+      {/* <AscDscTitle/> */}
     </div>
   );
 }
