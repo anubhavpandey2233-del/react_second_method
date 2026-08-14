@@ -7,6 +7,7 @@ function Header(props) {
             <NavLink to='/count'>Count</NavLink>
             <NavLink to='/password'>Password</NavLink>
             <NavLink to='/products/5'>Products</NavLink>
+            <NavLink to='/employee'>Employee</NavLink>
         </>
     );
 }

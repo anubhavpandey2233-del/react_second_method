@@ -20,9 +20,9 @@ function Products(props) {
     const [selectedCategory, setSelectedCategory] = useState('all')
     const [currentPage, setCurrentPage] = useState(1)
 
-    const {id}=useParams();
+    const { id } = useParams();
     console.log(id);
-    
+
 
     const fetchProductData = async () => {
         const response = await fetch("https://fakestoreapi.com/products");
@@ -194,14 +194,14 @@ function Products(props) {
 
                                 <Pagination>
 
-                                    <Pagination.Prev onClick={() => setCurrentPage(currentPage-1)}disabled={currentPage===1} />
+                                    <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} />
                                     {
                                         Array.from({ length: page }, (_, i) =>
 
-                                            <Pagination.Item onClick={() => setCurrentPage(i+1)} active={currentPage==i+1}>{i + 1}</Pagination.Item>)
+                                            <Pagination.Item onClick={() => setCurrentPage(i + 1)} active={currentPage == i + 1}>{i + 1}</Pagination.Item>)
                                     }
 
-                                    <Pagination.Next onClick={() => setCurrentPage(currentPage+1)}disabled={currentPage===page} />
+                                    <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === page} />
 
                                 </Pagination>
                             </>
