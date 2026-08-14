@@ -16,20 +16,21 @@ import AscDscTitle from './Container/AscDscTitle';
 import Products from './Container/Products';
 import { Route, Routes } from 'react-router';
 import Header from './component/Header';
+import EmployeeData from './Container/EmployeeData';
 // import Theme from './Container/Theme';
 // import TimerFunction from './Container/TimerFunction';
 
 function App(props) {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
 
-      <Routes>
+      {/* <Routes>
         <Route path='/count' element={<Count />} />
         <Route path='/password' element={<Password />} />
         <Route path='/products/:id' element={<Products />} />
 
-      </Routes>
+      </Routes> */}
       {/* <Count/> */}
       {/* <Password/> */}
 
@@ -70,6 +71,7 @@ function App(props) {
       {/* <Calculator/> */}
 
       {/* <AscDscTitle/> */}
+      <EmployeeData/>
     </div>
   );
 }
