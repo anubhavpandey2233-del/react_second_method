@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 function AscDscTitle(props) {
 
     const [ptitle, setTitle] = useState([]);
-    const [sort, setSort] = useState(true)
+    const [sort, setSort] = useState(true)  
 
     const fetchProductTitle = async () => {
         const response = await fetch("https://jsonplaceholder.typicode.com/posts");

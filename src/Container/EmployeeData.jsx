@@ -15,6 +15,8 @@ function EmployeeData(props) {
     const [allData, setAllData] = useState([])
     const [edit, setEdit] = useState()
     const [search, setSearch] = useState('')
+    const [sort, setSort] = useState(true)
+    const [sortField, setSortField] = useState('')
 
     useEffect(() => {
 
@@ -111,14 +113,43 @@ function EmployeeData(props) {
     const searchData = () => {
         console.log(search);
 
-        
-        let x=allData.filter((v)=>v.name.toLowerCase().includes(search.toLowerCase()))
-        console.log(x);
-        
-        return x
+        let x = allData.filter((v) =>
+            v.name.toLowerCase().includes(search.toLowerCase())
+        );
 
-    }
-   let searchdt= searchData()
+        console.log(x);
+
+        const sortData = x.sort((a, b) => {
+            if (sortField == "name") {
+                return sort
+                    ? a.name.localeCompare(b.name)
+                    : b.name.localeCompare(a.name);
+            }
+
+            if (sortField == "add") {
+                return sort
+                    ? a.address.localeCompare(b.address)
+                    : b.address.localeCompare(a.address);
+            }
+
+            if (sortField == "date") {
+                return sort
+                    ? a.date.localeCompare(b.date)
+                    : b.date.localeCompare(a.date);
+            }
+
+            if (sortField == "gender") {
+                return sort
+                    ? a.gender.localeCompare(b.gender)
+                    : b.gender.localeCompare(a.gender);
+            }
+
+            return 0;
+        });
+
+        return sortData;
+    };
+    let searchdt = searchData()
     return (
         <div className="container my-4">
             <Form onSubmit={() => handleSubmit()} className='my-4'>
@@ -181,12 +212,12 @@ function EmployeeData(props) {
                 <Table striped bordered hover className='text-center'>
                     <thead>
                         <tr>
-                            <th>Sr.no</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Date</th>
-                            <th>Gender</th>
-                            <th>Action</th>
+                            <th onClick={() => { setSort(!sort)(setSortField("srno")) }}>Sr.no</th>
+                            <th onClick={() => { setSort(!sort)(setSortField("name")) }}>Name</th>
+                            <th onClick={() => { setSort(!sort)(setSortField("add")) }}>Address</th>
+                            <th onClick={() => { setSort(!sort)(setSortField("date")) }} >Date</th>
+                            <th onClick={() => { setSort(!sort)(setSortField("gender")) }}>Gender</th>
+                            <th onClick={() => { setSort(!sort)(setSortField("action")) }}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
