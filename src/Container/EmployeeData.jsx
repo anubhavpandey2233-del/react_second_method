@@ -4,6 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import { BsPencilSquare } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa6";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
+import Pagination from 'react-bootstrap/Pagination';
 
 
 function EmployeeData(props) {
@@ -15,8 +18,8 @@ function EmployeeData(props) {
     const [allData, setAllData] = useState([])
     const [edit, setEdit] = useState()
     const [search, setSearch] = useState('')
-    const [sort, setSort] = useState(true)
-    const [sortField, setSortField] = useState('')
+    const [sort, setSort] = useState({ mode: null, by: '' })
+    const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
 
@@ -111,45 +114,98 @@ function EmployeeData(props) {
     }
 
     const searchData = () => {
-        console.log(search);
+        console.log(allData);
 
-        let x = allData.filter((v) =>
-            v.name.toLowerCase().includes(search.toLowerCase())
-        );
 
+        let x = allData?.filter((v) => v?.name?.toLowerCase()?.includes(search?.toLowerCase()))
         console.log(x);
 
-        const sortData = x.sort((a, b) => {
-            if (sortField == "name") {
-                return sort
-                    ? a.name.localeCompare(b.name)
-                    : b.name.localeCompare(a.name);
-            }
+        return x
 
-            if (sortField == "add") {
-                return sort
-                    ? a.address.localeCompare(b.address)
-                    : b.address.localeCompare(a.address);
-            }
-
-            if (sortField == "date") {
-                return sort
-                    ? a.date.localeCompare(b.date)
-                    : b.date.localeCompare(a.date);
-            }
-
-            if (sortField == "gender") {
-                return sort
-                    ? a.gender.localeCompare(b.gender)
-                    : b.gender.localeCompare(a.gender);
-            }
-
-            return 0;
-        });
-
-        return sortData;
-    };
+    }
     let searchdt = searchData()
+
+    const handleSort = (colName) => {
+
+        let sortStatus;
+
+        if (sort?.mode) {
+            if (sort?.mode === 'asc') {
+                sortStatus = 'desc'
+            } else {
+                sortStatus = 'asc'
+            }
+        } else {
+            sortStatus = 'desc'
+        }
+
+        setSort({ mode: sortStatus, by: colName })
+    }
+    console.log("after render", sort);
+
+    const filterData = () => {
+        console.log("filter", sort);
+        console.log(searchdt);
+
+        let sortOrder = [...searchdt];
+
+
+
+
+        if (sort?.mode) {
+            if (sort?.by == 'name') {
+                if (sort?.mode === 'asc') {
+                    sortOrder = searchdt?.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+                } else {
+                    sortOrder = searchdt?.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()))
+                }
+            } else if (sort?.by == 'add') {
+                if (sort?.mode === 'asc') {
+                    sortOrder = searchdt?.sort((a, b) => a.address.toLowerCase().localeCompare(b.address.toLowerCase()))
+                } else {
+                    sortOrder = searchdt?.sort((a, b) => b.address.toLowerCase().localeCompare(a.address.toLowerCase()))
+                }
+            } else if (sort?.by == 'gender') {
+                if (sort?.mode === 'asc') {
+                    sortOrder = searchdt?.sort((a, b) => a)
+                } else {
+                    sortOrder = searchdt?.sort((a, b) => b.gender.toLowerCase().localeCompare(a.gender.toLowerCase()))
+                }
+            } else if (sort?.by == 'date') {
+                if (sort?.mode === 'asc') {
+                    sortOrder = searchdt?.sort((a, b) => new Date(a.date) - new Date(b.date))
+                } else {
+                    sortOrder = searchdt?.sort((a, b) => new Date(b.date) - new Date(a.date))
+                }
+            }
+        }
+
+
+        return searchdt
+    }
+
+
+    const finalData = filterData();
+
+    let perPage = 3;
+    let page = Math.ceil(finalData.length / perPage)
+
+    const pageData = () => {
+        const startIndex = (currentPage - 1) * 3
+        const endIndex = startIndex + perPage - 1
+
+        console.log(startIndex, endIndex);
+
+
+        let x = finalData.slice(startIndex, endIndex + 1)
+        console.log(x);
+
+        return x;
+    }
+
+    let pagination = pageData()
+
+
     return (
         <div className="container my-4">
             <Form onSubmit={() => handleSubmit()} className='my-4'>
@@ -212,18 +268,46 @@ function EmployeeData(props) {
                 <Table striped bordered hover className='text-center'>
                     <thead>
                         <tr>
-                            <th onClick={() => { setSort(!sort)(setSortField("srno")) }}>Sr.no</th>
-                            <th onClick={() => { setSort(!sort)(setSortField("name")) }}>Name</th>
-                            <th onClick={() => { setSort(!sort)(setSortField("add")) }}>Address</th>
-                            <th onClick={() => { setSort(!sort)(setSortField("date")) }} >Date</th>
-                            <th onClick={() => { setSort(!sort)(setSortField("gender")) }}>Gender</th>
-                            <th onClick={() => { setSort(!sort)(setSortField("action")) }}>Action</th>
+                            <th>Sr.no</th>
+                            <th onClick={() => handleSort('name')}>
+                                Name
+                                {
+                                    sort?.by === 'name' && sort?.mode ?
+                                        sort?.by === 'name' && sort?.mode === 'asc' ? <IoIosArrowDown /> : <IoIosArrowUp /> :
+                                        null
+                                }
+                            </th>
+                            <th onClick={() => handleSort('add')}>
+                                Address
+                                {
+                                    sort?.by === 'add' && sort?.mode ?
+                                        sort?.by === 'add' && sort?.mode === 'asc' ? <IoIosArrowDown /> : <IoIosArrowUp /> :
+                                        null
+                                }
+                            </th>
+                            <th onClick={() => handleSort('date')}>
+                                Date
+                                {
+                                    sort.by === 'date' && sort?.mode ?
+                                        sort.by === 'date' && sort?.mode === 'asc' ? <IoIosArrowDown /> : <IoIosArrowUp /> :
+                                        null
+                                }
+                            </th>
+                            <th onClick={() => handleSort('gender')}>
+                                Gender
+                                {
+                                    sort?.by === 'gender' && sort?.mode ?
+                                        sort?.by === 'gender' && sort?.mode === 'asc' ? <IoIosArrowDown /> : <IoIosArrowUp /> :
+                                        null
+                                }
+                            </th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         {
-                            searchdt.map((v, i) => (
+                            pagination?.map((v, i) => (
                                 <tr>
                                     <td>{i + 1}</td>
                                     <td>{v?.name}</td>
@@ -241,6 +325,18 @@ function EmployeeData(props) {
 
                     </tbody>
                 </Table>
+                <Pagination>
+
+                    <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} />
+                    {
+                        Array.from({ length: page }, (_, i) =>
+
+                            <Pagination.Item onClick={() => setCurrentPage(i + 1)} active={currentPage == i + 1}>{i + 1}</Pagination.Item>)
+                    }
+
+                    <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === page} />
+
+                </Pagination>
             </div>
         </div>
     );
