@@ -147,38 +147,7 @@ function EmployeeData(props) {
         console.log("filter", sort);
         console.log(searchdt);
 
-        let sortOrder = [...searchdt];
 
-
-
-
-        if (sort?.mode) {
-            if (sort?.by == 'name') {
-                if (sort?.mode === 'asc') {
-                    sortOrder = searchdt?.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
-                } else {
-                    sortOrder = searchdt?.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()))
-                }
-            } else if (sort?.by == 'add') {
-                if (sort?.mode === 'asc') {
-                    sortOrder = searchdt?.sort((a, b) => a.address.toLowerCase().localeCompare(b.address.toLowerCase()))
-                } else {
-                    sortOrder = searchdt?.sort((a, b) => b.address.toLowerCase().localeCompare(a.address.toLowerCase()))
-                }
-            } else if (sort?.by == 'gender') {
-                if (sort?.mode === 'asc') {
-                    sortOrder = searchdt?.sort((a, b) => a)
-                } else {
-                    sortOrder = searchdt?.sort((a, b) => b.gender.toLowerCase().localeCompare(a.gender.toLowerCase()))
-                }
-            } else if (sort?.by == 'date') {
-                if (sort?.mode === 'asc') {
-                    sortOrder = searchdt?.sort((a, b) => new Date(a.date) - new Date(b.date))
-                } else {
-                    sortOrder = searchdt?.sort((a, b) => new Date(b.date) - new Date(a.date))
-                }
-            }
-        }
 
 
         return searchdt
@@ -196,148 +165,522 @@ function EmployeeData(props) {
 
         console.log(startIndex, endIndex);
 
+        let sortOrder = finalData.slice(startIndex, endIndex + 1)
+        console.log(sortOrder);
 
-        let x = finalData.slice(startIndex, endIndex + 1)
-        console.log(x);
+        // let sortOrder = [...searchdt];
 
-        return x;
+
+        if (sort?.mode) {
+            if (sort?.by == 'name') {
+                if (sort?.mode === 'asc') {
+                    sortOrder = sortOrder?.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+                } else {
+                    sortOrder = sortOrder?.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()))
+                }
+            } else if (sort?.by == 'add') {
+                if (sort?.mode === 'asc') {
+                    sortOrder = sortOrder?.sort((a, b) => a.address.toLowerCase().localeCompare(b.address.toLowerCase()))
+                } else {
+                    sortOrder = sortOrder?.sort((a, b) => b.address.toLowerCase().localeCompare(a.address.toLowerCase()))
+                }
+            } else if (sort?.by == 'gender') {
+                if (sort?.mode === 'asc') {
+                    sortOrder = sortOrder?.sort((a, b) => a)
+                } else {
+                    sortOrder = sortOrder?.sort((a, b) => b.gender.toLowerCase().localeCompare(a.gender.toLowerCase()))
+                }
+            } else if (sort?.by == 'date') {
+                if (sort?.mode === 'asc') {
+                    sortOrder = sortOrder?.sort((a, b) => new Date(a.date) - new Date(b.date))
+                } else {
+                    sortOrder = sortOrder?.sort((a, b) => new Date(b.date) - new Date(a.date))
+                }
+            }
+        }
+
+        return sortOrder;
     }
 
     let pagination = pageData()
 
 
     return (
-        <div className="container my-4">
-            <Form onSubmit={() => handleSubmit()} className='my-4'>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Employee Name</Form.Label>
-                    <Form.Control
-                        value={name}
-                        type="text"
-                        placeholder="Enter name"
-                        onChange={(e) => setName(e.target.value)} />
+        <div className="bg-light min-vh-100 py-4">
 
-                </Form.Group>
+            <div className="container">
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Address</Form.Label>
-                    <textarea
-                        value={address}
-                        className="form-control"
-                        placeholder="Enter Address"
-                        onChange={(e) => setAddress(e.target.value)}
-                    ></textarea>
-                </Form.Group>
+                {/* Page Header */}
+                <div className="mb-4">
+                    <h2 className="fw-bold text-primary mb-1">
+                        Employee Management
+                    </h2>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Joining Date</Form.Label>
-                    <Form.Control
-                        value={date}
-                        type="date"
-                        placeholder="Joining Date"
-                        onChange={(e) => setDate(e.target.value)}
-                    />
-                </Form.Group>
+                    <p className="text-secondary mb-0">
+                        Add, edit and manage employee records
+                    </p>
+                </div>
 
-                <Form.Group className="mb-3" >
-                    <label htmlFor="">Gender</label>
-                    <div value={gender} onChange={(e) => setGender(e.target.value)}>
-                        <Form.Check type="radio" name='gender' value='Male' aria-label="radio 1" label='Male' />
-                        <Form.Check type="radio" name='gender' value='Female' aria-label="radio 1" label='Female' />
+
+                {/* Employee Form */}
+                <div className="card border-0 shadow-sm rounded-4 mb-4">
+
+                    <div className="card-header bg-primary text-white border-0 rounded-top-4 py-3">
+                        <h5 className="mb-0 fw-semibold">
+                            {edit ? "Edit Employee" : "Add New Employee"}
+                        </h5>
                     </div>
-                </Form.Group>
+
+                    <div className="card-body p-4">
+
+                        <Form onSubmit={handleSubmit}>
+
+                            <div className="row">
+
+                                {/* Name */}
+                                <div className="col-md-6 mb-3">
+
+                                    <Form.Label className="fw-semibold">
+                                        Employee Name
+                                    </Form.Label>
+
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter employee name"
+                                        value={name || ""}
+                                        onChange={(e) =>
+                                            setName(e.target.value)
+                                        }
+                                        className="py-2"
+                                    />
+
+                                </div>
 
 
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                                {/* Date */}
+                                <div className="col-md-6 mb-3">
 
-            </Form>
-            <div className='my-4'>
-                <Form.Control
-                    type="text"
-                    placeholder="Search"
-                    onChange={(e) => setSearch(e.target.value)} />
+                                    <Form.Label className="fw-semibold">
+                                        Joining Date
+                                    </Form.Label>
+
+                                    <Form.Control
+                                        type="date"
+                                        value={date || ""}
+                                        onChange={(e) =>
+                                            setDate(e.target.value)
+                                        }
+                                        className="py-2"
+                                    />
+
+                                </div>
+
+
+                                {/* Address */}
+                                <div className="col-md-8 mb-3">
+
+                                    <Form.Label className="fw-semibold">
+                                        Address
+                                    </Form.Label>
+
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={3}
+                                        placeholder="Enter employee address"
+                                        value={address || ""}
+                                        onChange={(e) =>
+                                            setAddress(e.target.value)
+                                        }
+                                    />
+
+                                </div>
+
+
+                                {/* Gender */}
+                                <div className="col-md-4 mb-3">
+
+                                    <Form.Label className="fw-semibold">
+                                        Gender
+                                    </Form.Label>
+
+                                    <div className="border rounded-3 p-3">
+
+                                        <Form.Check
+                                            type="radio"
+                                            name="gender"
+                                            label="Male"
+                                            value="Male"
+                                            checked={gender === "Male"}
+                                            onChange={(e) =>
+                                                setGender(e.target.value)
+                                            }
+                                            className="mb-2"
+                                        />
+
+                                        <Form.Check
+                                            type="radio"
+                                            name="gender"
+                                            label="Female"
+                                            value="Female"
+                                            checked={gender === "Female"}
+                                            onChange={(e) =>
+                                                setGender(e.target.value)
+                                            }
+                                        />
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            {/* Buttons */}
+                            <div className="d-flex gap-2">
+
+                                <Button
+                                    variant={edit ? "warning" : "primary"}
+                                    type="submit"
+                                    className="px-4"
+                                >
+                                    {edit ? "Update Employee" : "Add Employee"}
+                                </Button>
+
+                                {edit && (
+
+                                    <Button
+                                        variant="secondary"
+                                        type="button"
+                                        onClick={() => {
+                                            setEdit();
+                                            setName("");
+                                            setAddress("");
+                                            setDate("");
+                                            setGender("");
+                                        }}
+                                    >
+                                        Cancel
+                                    </Button>
+
+                                )}
+
+                            </div>
+
+                        </Form>
+
+                    </div>
+
+                </div>
+
+
+                {/* Employee Table */}
+                <div className="card border-0 shadow-sm rounded-4">
+
+                    <div className="card-body p-4">
+
+                        {/* Table Header */}
+                        <div className="row align-items-center mb-4">
+
+                            <div className="col-md-6">
+                                <h5 className="fw-bold mb-1">
+                                    Employee List
+                                </h5>
+
+                                <small className="text-secondary">
+                                    Manage employee information
+                                </small>
+                            </div>
+
+                            <div className="col-md-6 mt-3 mt-md-0">
+
+                                <Form.Control
+                                    type="text"
+                                    placeholder="🔍 Search employee..."
+                                    value={search}
+                                    onChange={(e) => {
+                                        setSearch(e.target.value);
+                                        setCurrentPage(1);
+                                    }}
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Table */}
+                        <div className="table-responsive">
+
+                            <Table
+                                striped
+                                bordered
+                                hover
+                                responsive
+                                className="align-middle text-center mb-0"
+                            >
+
+                                <thead className="table-primary">
+
+                                    <tr>
+
+                                        <th>Sr.no</th>
+
+                                        <th
+                                            onClick={() =>
+                                                handleSort("name")
+                                            }
+                                            style={{
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            Name{" "}
+
+                                            {sort?.by === "name" &&
+                                                (
+                                                    sort?.mode === "asc"
+                                                        ? <IoIosArrowUp />
+                                                        : <IoIosArrowDown />
+                                                )
+                                            }
+
+                                        </th>
+
+
+                                        <th
+                                            onClick={() =>
+                                                handleSort("add")
+                                            }
+                                            style={{
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            Address{" "}
+
+                                            {sort?.by === "add" &&
+                                                (
+                                                    sort?.mode === "asc"
+                                                        ? <IoIosArrowUp />
+                                                        : <IoIosArrowDown />
+                                                )
+                                            }
+
+                                        </th>
+
+
+                                        <th
+                                            onClick={() =>
+                                                handleSort("date")
+                                            }
+                                            style={{
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            Joining Date{" "}
+
+                                            {sort?.by === "date" &&
+                                                (
+                                                    sort?.mode === "asc"
+                                                        ? <IoIosArrowUp />
+                                                        : <IoIosArrowDown />
+                                                )
+                                            }
+
+                                        </th>
+
+
+                                        <th
+                                            onClick={() =>
+                                                handleSort("gender")
+                                            }
+                                            style={{
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            Gender{" "}
+
+                                            {sort?.by === "gender" &&
+                                                (
+                                                    sort?.mode === "asc"
+                                                        ? <IoIosArrowUp />
+                                                        : <IoIosArrowDown />
+                                                )
+                                            }
+
+                                        </th>
+
+
+                                        <th>
+                                            Action
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    {pagination.length > 0 ? (
+
+                                        pagination.map((v, i) => (
+
+                                            <tr key={v.id}>
+
+                                                <td className="fw-semibold">
+                                                    {(currentPage - 1) *
+                                                        perPage +
+                                                        i +
+                                                        1}
+                                                </td>
+
+                                                <td className="fw-semibold">
+                                                    {v?.name}
+                                                </td>
+
+                                                <td>
+                                                    {v?.address}
+                                                </td>
+
+                                                <td>
+                                                    {v?.date}
+                                                </td>
+
+                                                <td>
+
+                                                    <span
+                                                        className={
+                                                            v.gender === "Male"
+                                                                ? "badge bg-info text-dark"
+                                                                : "badge bg-danger"
+                                                        }
+                                                    >
+                                                        {v?.gender}
+                                                    </span>
+
+                                                </td>
+
+
+                                                {/* Action */}
+                                                <td>
+
+                                                    <Button
+                                                        variant="outline-primary"
+                                                        size="sm"
+                                                        className="me-2"
+                                                        title="Edit"
+                                                        onClick={() =>
+                                                            handleEdit(v.id)
+                                                        }
+                                                    >
+                                                        <BsPencilSquare />
+                                                    </Button>
+
+
+                                                    <Button
+                                                        variant="outline-danger"
+                                                        size="sm"
+                                                        title="Delete"
+                                                        onClick={() =>
+                                                            handleDelete(v.id)
+                                                        }
+                                                    >
+                                                        <FaTrash />
+                                                    </Button>
+
+                                                </td>
+
+                                            </tr>
+
+                                        ))
+
+                                    ) : (
+
+                                        <tr>
+
+                                            <td
+                                                colSpan="6"
+                                                className="py-5 text-secondary"
+                                            >
+                                                No employee found 😕
+                                            </td>
+
+                                        </tr>
+
+                                    )}
+
+                                </tbody>
+
+                            </Table>
+
+                        </div>
+
+
+                        {/* Bottom Pagination */}
+                        {page > 0 && (
+
+                            <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-3">
+
+                                <small className="text-secondary">
+                                    Showing {pagination.length} of{" "}
+                                    {finalData.length} employees
+                                </small>
+
+
+                                <Pagination className="mb-0">
+
+                                    <Pagination.Prev
+                                        disabled={currentPage === 1}
+                                        onClick={() =>
+                                            setCurrentPage(
+                                                currentPage - 1
+                                            )
+                                        }
+                                    />
+
+
+                                    {Array.from(
+                                        { length: page },
+                                        (_, i) => (
+
+                                            <Pagination.Item
+                                                key={i}
+                                                active={
+                                                    currentPage === i + 1
+                                                }
+                                                onClick={() =>
+                                                    setCurrentPage(i + 1)
+                                                }
+                                            >
+                                                {i + 1}
+                                            </Pagination.Item>
+
+                                        )
+                                    )}
+
+
+                                    <Pagination.Next
+                                        disabled={
+                                            currentPage === page
+                                        }
+                                        onClick={() =>
+                                            setCurrentPage(
+                                                currentPage + 1
+                                            )
+                                        }
+                                    />
+
+                                </Pagination>
+
+                            </div>
+
+                        )}
+
+                    </div>
+
+                </div>
+
             </div>
 
-
-
-            <div>
-
-
-                <Table striped bordered hover className='text-center'>
-                    <thead>
-                        <tr>
-                            <th>Sr.no</th>
-                            <th onClick={() => handleSort('name')}>
-                                Name
-                                {
-                                    sort?.by === 'name' && sort?.mode ?
-                                        sort?.by === 'name' && sort?.mode === 'asc' ? <IoIosArrowDown /> : <IoIosArrowUp /> :
-                                        null
-                                }
-                            </th>
-                            <th onClick={() => handleSort('add')}>
-                                Address
-                                {
-                                    sort?.by === 'add' && sort?.mode ?
-                                        sort?.by === 'add' && sort?.mode === 'asc' ? <IoIosArrowDown /> : <IoIosArrowUp /> :
-                                        null
-                                }
-                            </th>
-                            <th onClick={() => handleSort('date')}>
-                                Date
-                                {
-                                    sort.by === 'date' && sort?.mode ?
-                                        sort.by === 'date' && sort?.mode === 'asc' ? <IoIosArrowDown /> : <IoIosArrowUp /> :
-                                        null
-                                }
-                            </th>
-                            <th onClick={() => handleSort('gender')}>
-                                Gender
-                                {
-                                    sort?.by === 'gender' && sort?.mode ?
-                                        sort?.by === 'gender' && sort?.mode === 'asc' ? <IoIosArrowDown /> : <IoIosArrowUp /> :
-                                        null
-                                }
-                            </th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {
-                            pagination?.map((v, i) => (
-                                <tr>
-                                    <td>{i + 1}</td>
-                                    <td>{v?.name}</td>
-                                    <td>{v?.address}</td>
-                                    <td>{v?.date}</td>
-                                    <td>{v?.gender}</td>
-                                    <td>
-                                        <BsPencilSquare onClick={() => handleEdit(v.id)} />
-                                        <FaTrash className='ms-4' onClick={() => handleDelete(v.id)} />
-                                    </td>
-                                </tr>
-                            ))
-                        }
-
-
-                    </tbody>
-                </Table>
-                <Pagination>
-
-                    <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} />
-                    {
-                        Array.from({ length: page }, (_, i) =>
-
-                            <Pagination.Item onClick={() => setCurrentPage(i + 1)} active={currentPage == i + 1}>{i + 1}</Pagination.Item>)
-                    }
-
-                    <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === page} />
-
-                </Pagination>
-            </div>
         </div>
     );
 }
