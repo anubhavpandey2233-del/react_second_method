@@ -146,10 +146,6 @@ function EmployeeData(props) {
     const filterData = () => {
         console.log("filter", sort);
         console.log(searchdt);
-
-
-
-
         return searchdt
     }
 
