@@ -17,6 +17,7 @@ import Products from './Container/Products';
 import { Route, Routes } from 'react-router';
 import Header from './component/Header';
 import EmployeeData from './Container/EmployeeData';
+import Muibasics from './Container/Muibasics';
 // import Theme from './Container/Theme';
 // import TimerFunction from './Container/TimerFunction';
 
@@ -24,13 +25,14 @@ function App(props) {
   return (
     <div>
       {/* <Header /> */}
- 
+
       {/* <Routes>
         <Route path='/count' element={<Count />} />
         <Route path='/password' element={<Password />} />
         <Route path='/products/:id' element={<Products />} />
 
       </Routes> */}
+      <Muibasics/>
       {/* <Count/> */}
       {/* <Password/> */}
 
@@ -71,7 +73,7 @@ function App(props) {
       {/* <Calculator/> */}
 
       {/* <AscDscTitle/> */}
-      <EmployeeData/>
+      {  /* <EmployeeData/> */}
     </div>
   );
 }
