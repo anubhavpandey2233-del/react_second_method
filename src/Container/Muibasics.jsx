@@ -120,7 +120,40 @@ import {
     MenuSeparator,
 } from '../component/Menubar.jsx';
 
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
+
+import Modal from '@mui/material/Modal';
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
+
+
+
+const icon = (
+    <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>
+        <svg width="100" height="100">
+            <Box
+                component="polygon"
+                points="0,100 50,00, 100,100"
+                sx={(theme) => ({
+                    fill: theme.palette.common.white,
+                    stroke: theme.palette.divider,
+                    strokeWidth: 1,
+                })}
+            />
+        </svg>
+    </Paper>
+);
 
 
 const ExpandMore = styled((props) => {
@@ -435,6 +468,30 @@ function Muibasics(props) {
     const [googleTasks, setGoogleTasks] = React.useState(true);
     const [mail, setMail] = React.useState(false);
     const [messages, setMessages] = React.useState(false);
+
+
+
+    const handleClickk = () => {
+        setOpen((prev) => !prev);
+    };
+    const handleClickAway = () => {
+        setOpen(false);
+    };
+
+    const styles = {
+        position: 'absolute',
+        top: 28,
+        right: 0,
+        left: 0,
+        zIndex: 1,
+        border: '1px solid',
+        p: 1,
+        bgcolor: 'background.paper',
+    };
+
+
+    const handleOpenn = () => setOpen(true);
+    const handleCloseee = () => setOpen(false);
 
     return (
         <div className='container my-4'>
@@ -968,6 +1025,80 @@ function Muibasics(props) {
                     </MenuPortal>
                 </MenuRoot>
             </Menubar>
+
+
+            <h2 className='my-4'>Click-Away Listener</h2>
+            <ClickAwayListener onClickAway={handleClickAway}>
+                <Box sx={{ position: 'relative' }}>
+                    <button type="button" onClick={handleClickk}>
+                        Open menu dropdown
+                    </button>
+                    {open ? (
+                        <Box sx={styles}>
+                            Click me, I will stay visible until you click outside.
+                        </Box>
+                    ) : null}
+                </Box>
+            </ClickAwayListener>
+
+
+            <h2 className='mt-4'>Basic modal</h2>
+            <div className='my-4'>
+                <Button onClick={handleOpenn}>Open modal</Button>
+                <Modal
+                    open={open}
+                    onClose={handleCloseee}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Text in a modal
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </Typography>
+                    </Box>
+                </Modal>
+            </div>
+
+
+            <h2>Collapse Transition</h2>
+            <Box sx={{ height: 300 }}>
+                <FormControlLabel
+                    control={<Switch checked={checked} onChange={handleChange} />}
+                    label="Show"
+                />
+                <Box
+                    sx={{
+                        '& > :not(style)': {
+                            display: 'flex',
+                            justifyContent: 'space-around',
+                            height: 120,
+                            width: 250,
+                        },
+                    }}
+                >
+                    <div>
+                        <Collapse in={checked}>{icon}</Collapse>
+                        <Collapse in={checked} collapsedSize={40}>
+                            {icon}
+                        </Collapse>
+                    </div>
+                    <div>
+                        <Box sx={{ width: '50%' }}>
+                            <Collapse orientation="horizontal" in={checked}>
+                                {icon}
+                            </Collapse>
+                        </Box>
+                        <Box sx={{ width: '50%' }}>
+                            <Collapse orientation="horizontal" in={checked} collapsedSize={40}>
+                                {icon}
+                            </Collapse>
+                        </Box>
+                    </div>
+                </Box>
+            </Box>
         </div>
     );
 }
