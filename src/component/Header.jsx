@@ -8,6 +8,7 @@ function Header(props) {
             <NavLink to='/password'>Password</NavLink>
             <NavLink to='/products/5'>Products</NavLink>
             <NavLink to='/employee'>Employee</NavLink>
+            <NavLink to='/validationyupformik'>Formik</NavLink>
         </>
     );
 }
