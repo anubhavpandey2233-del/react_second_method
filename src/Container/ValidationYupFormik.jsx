@@ -16,6 +16,7 @@ import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Form from 'react-bootstrap/Form';
 
 
 function ValidationYupFormik(props) {
@@ -55,8 +56,6 @@ function ValidationYupFormik(props) {
                 } else {
                     return false
                 }
-
-
             }),
 
         description: string()
@@ -77,15 +76,38 @@ function ValidationYupFormik(props) {
         // .min(5,"Minimu 5 letter required")
         // .max(20,"Maximum 20 letter you can write")
 
+        file: string()
+            .required()
+            .test("file", "Please choose file under given critegira", function (val) {
+
+                const allowedfiles = ['image/jpeg', 'image/jpg', 'image/png']
+
+                console.log(val.type, allowedfiles.includes(val.type));
+
+                if (allowedfiles.includes(val.type)) {
+                    return true;
+
+                    if (val.size < 2 * 1024 * 1024) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                } else {
+                    return false;
+                }
+
+            }),
+
         gender: string()
             .required("Please select gender"),
 
-        hobbies:string()
-        .required()
-        .test("hobbies","please select 2 hobby",function(val){
-            console.log(val);
-            
-        })
+        hobbies: string()
+            .required()
+            .test("hobbies", "please select 2 hobby", function (val) {
+                console.log(val);
+
+            })
 
     })
 
@@ -96,6 +118,7 @@ function ValidationYupFormik(props) {
             number: '',
             date: '',
             description: '',
+            file: '',
             gender: '',
             hobbies: ''
         },
@@ -192,6 +215,21 @@ function ValidationYupFormik(props) {
                                 helperText={errors.description && touched.description ? errors.description : ''}
                             />
 
+                            <Form.Group controlId="formFile" className="mb-3">
+                                <Form.Label>File</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    name='file'
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                />
+                                <p className='error'>
+                                    {
+                                        errors.file && touched.file ? errors.file : ''
+                                    }
+                                </p>
+                            </Form.Group>
+
                             <FormControl>
                                 <FormLabel id={`gender-label`}>Gender</FormLabel>
                                 <RadioGroup
@@ -216,7 +254,7 @@ function ValidationYupFormik(props) {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             >
-                                <FormControlLabel control={<Checkbox />}  label="Reading" />
+                                <FormControlLabel control={<Checkbox />} label="Reading" />
                                 <FormControlLabel control={<Checkbox />} label="Traveling" />
                                 <FormControlLabel control={<Checkbox />} label="Singing" />
 
