@@ -6,17 +6,37 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Box } from '@mui/material';
-import { object, string } from 'yup';
+import { array, object, string } from 'yup';
 import { useFormik } from 'formik';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
+import Form from 'react-bootstrap/Form';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Form from 'react-bootstrap/Form';
+import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+
+
+
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 
 function ValidationYupFormik(props) {
@@ -76,39 +96,27 @@ function ValidationYupFormik(props) {
         // .min(5,"Minimu 5 letter required")
         // .max(20,"Maximum 20 letter you can write")
 
-        file: string()
-            .required()
-            .test("file", "Please choose file under given critegira", function (val) {
 
-                const allowedfiles = ['image/jpeg', 'image/jpg', 'image/png']
-
-                console.log(val.type, allowedfiles.includes(val.type));
-
-                if (allowedfiles.includes(val.type)) {
-                    return true;
-
-                    if (val.size < 2 * 1024 * 1024) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-
-                } else {
-                    return false;
-                }
-
-            }),
 
         gender: string()
             .required("Please select gender"),
 
-        hobbies: string()
-            .required()
-            .test("hobbies", "please select 2 hobby", function (val) {
+        hobby: array().min(2, "Please select atleast 2 hobby"),
+
+
+        profileImg: array()
+            .test("profileImg", "Plese select only .png,.jpg,jpeg files", function (val) {
+                const fileType = ["image/jpg", "image/jpeg", "image/png"]
+
+                return val.every((v) => fileType.includes(v.type))
                 console.log(val);
 
             })
+            .test("profileImg", "Plese select files under 2MB", function (val) {
+                return val.every((v) => v.size < 2 * 1024 * 1024)
+            }),
 
+            country:string().required("Please select any country.")
     })
 
     const formik = useFormik({
@@ -118,9 +126,10 @@ function ValidationYupFormik(props) {
             number: '',
             date: '',
             description: '',
-            file: '',
             gender: '',
-            hobbies: ''
+            hobby: [],
+            profileImg: [],
+            country:''
         },
         validationSchema: categorySchema,
         onSubmit: values => {
@@ -131,7 +140,7 @@ function ValidationYupFormik(props) {
     console.log(formik.errors);
 
     //Destructuring
-    const { handleSubmit, touched, handleChange, handleBlur, errors } = formik
+    const { handleSubmit, touched, handleChange, handleBlur, errors, values, setFieldValue, setFieldTouched } = formik
 
     return (
 
@@ -215,20 +224,7 @@ function ValidationYupFormik(props) {
                                 helperText={errors.description && touched.description ? errors.description : ''}
                             />
 
-                            <Form.Group controlId="formFile" className="mb-3">
-                                <Form.Label>File</Form.Label>
-                                <Form.Control
-                                    type="file"
-                                    name='file'
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                <p className='error'>
-                                    {
-                                        errors.file && touched.file ? errors.file : ''
-                                    }
-                                </p>
-                            </Form.Group>
+
 
                             <FormControl>
                                 <FormLabel id={`gender-label`}>Gender</FormLabel>
@@ -249,21 +245,133 @@ function ValidationYupFormik(props) {
                                 </p>
                             </FormControl>
 
-                            <FormGroup
-                                name="hobbies"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            >
-                                <FormControlLabel control={<Checkbox />} label="Reading" />
-                                <FormControlLabel control={<Checkbox />} label="Traveling" />
-                                <FormControlLabel control={<Checkbox />} label="Singing" />
+                            <FormGroup>
+                                <FormControlLabel
 
+                                    control={<Checkbox
+                                        name='hobby'
+                                        value='Criket'
+                                        checked={values.hobby.includes('Criket')}
+                                        onChange={(e) => {
+                                            const { checked, value } = e.target
+
+                                            console.log(checked, value);
+
+                                            if (checked) {
+                                                setFieldValue("hobby", [...values.hobby, value])
+                                            } else {
+                                                setFieldValue("hobby", values.hobby?.filter(v => v != value))
+                                            }
+                                        }}
+
+                                    />} label="Criket"
+
+                                />
+                                <FormControlLabel
+
+                                    control={<Checkbox
+                                        name='hobby'
+                                        value='Reading'
+                                        checked={values.hobby.includes('Reading')}
+                                        onChange={(e) => {
+                                            const { checked, value } = e.target
+
+                                            console.log(checked, value);
+
+                                            if (checked) {
+                                                setFieldValue("hobby", [...values.hobby, value])
+                                            } else {
+                                                setFieldValue("hobby", values.hobby?.filter(v => v != value))
+                                            }
+                                        }}
+                                    />} label="Reading"
+
+                                />
+                                <FormControlLabel
+
+                                    control={<Checkbox
+                                        name='hobby'
+                                        value='Music'
+                                        checked={values.hobby.includes('Music')}
+
+                                        onChange={(e) => {
+                                            const { checked, value } = e.target
+
+                                            console.log(checked, value);
+
+                                            if (checked) {
+                                                setFieldValue("hobby", [...values.hobby, value])
+                                            } else {
+                                                setFieldValue("hobby", values.hobby?.filter(v => v != value))
+                                            }
+                                        }}
+                                    />} label="Music"
+
+                                />
                                 <p className='error'>
                                     {
-                                        errors.hobbies && touched.hobbies ? errors.hobbies : ''
+                                        errors.hobby && touched.hobby ? errors.hobby : ''
                                     }
                                 </p>
                             </FormGroup>
+
+                            <Button
+                                component="label"
+                                role={undefined}
+                                variant="contained"
+                                tabIndex={-1}
+                                startIcon={<CloudUploadIcon />}
+                            >
+                                Upload files
+                                <VisuallyHiddenInput
+                                    name='profileImg'
+                                    type="file"
+                                    onChange={(event) => {
+                                        const files = Array.from(event.target.files)
+                                        setFieldValue("profileImg", files)
+                                        console.log(files);
+
+                                        setFieldTouched("profileImg", true, false)
+
+                                    }
+                                    }
+                                    multiple
+                                />
+                            </Button>
+                            <p className='error'>
+                                {
+                                    errors.profileImg && touched.profileImg ? errors.profileImg : ''
+                                }
+                            </p>
+                            {
+                                values.profileImg?.map((v) => (
+                                    <img src={URL.createObjectURL(v)} alt="" width={"100px"} height={"100px"} />
+                                ))
+                            }
+
+                            <Box sx={{ minWidth: 120 }}>
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Country</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        name='country'
+                                        value={values}
+                                        label="Country"
+                                        onChange={handleChange}
+                                    >
+                                        <MenuItem value={'0'}>select contry</MenuItem>
+                                        <MenuItem value={'india'}>INDIA</MenuItem>
+                                        <MenuItem value={'usa'}>USA</MenuItem>
+                                    </Select>
+                                    <p className='error'>
+                                        {
+                                            errors.country && touched.country ? errors.country : ''
+                                        }
+                                    </p>
+                                </FormControl>
+                            </Box>
+
                         </form>
                     </DialogContent>
                     <DialogActions>
