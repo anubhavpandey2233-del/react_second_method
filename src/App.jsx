@@ -38,9 +38,9 @@ function App(props) {
         <Route path='/count' element={<Count />} />
         <Route path='/password' element={<Password />} />
         <Route path='/products/:id' element={<Products />} />
-        <Route path='/validationyupformik' element={<ValidationYupFormik/>} />
-                <Route path='/learnformikyup1' element={<LearnFormikYup1 />} />
-      </Routes> 
+        <Route path='/validationyupformik' element={<ValidationYupFormik />} />
+        <Route path='/learnformikyup1' element={<LearnFormikYup1 />} />
+      </Routes>
       {/* <Muibasics/> */}
       {/* <Count/> */}
       {/* <Password/> */}

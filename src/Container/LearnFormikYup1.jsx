@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import TextBox from '../component/TextBox';
 import { object, string } from 'yup';
+import RadioButtons from '../component/RadioButtons';
 
 function LearnFormikYup1(props) {
 
@@ -9,14 +10,20 @@ function LearnFormikYup1(props) {
         email: string().required(),
         firstName: string().required(),
         lastName: string().required(),
-        country:string().required(),
+        country: string().required(),
     })
 
     const ContryData = [
-       {value:'' ,label:'Select Country'},
-       {value:'USA' ,label:'USA'},
-       {value:'India' ,label:'India'}
+        { value: '', label: 'Select Country' },
+        { value: 'USA', label: 'USA' },
+        { value: 'India', label: 'India' }
 
+    ]
+
+    const radiobuttonsData = [
+        { value: 'female', label: 'Female' },
+        { value: 'male', label: 'Male' },
+        { value: 'other', label: 'Other' }
     ]
 
     return (
@@ -25,7 +32,7 @@ function LearnFormikYup1(props) {
                 email: '',
                 firstName: '',
                 lastName: '',
-                country:''
+                country: ''
             }}
             validationSchema={yupSchema}
             onSubmit={(values, actions) => {
@@ -33,12 +40,12 @@ function LearnFormikYup1(props) {
 
             }}
         >
-
             <Form>
                 <TextBox name="firstName" type="text" label="First Name" />
                 <TextBox name="lastName" type="text" label="Last Name" />
                 <TextBox name="email" type="email" label="Email" />
-                <TextBox name="country" ContryData={ContryData} select/>
+                <TextBox name="country" ContryData={ContryData} select />
+                <RadioButtons name="gender" label="gender" radiobuttonsData={radiobuttonsData} />
                 <button type="submit">Submit</button>
             </Form>
 
