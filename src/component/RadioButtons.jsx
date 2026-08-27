@@ -2,33 +2,33 @@ import { FormControlLabel, Radio, RadioGroup, FormControl, FormLabel } from '@mu
 import { useField } from 'formik';
 import React from 'react';
 
-function RadioButtons({ label, radiobuttonsData, ...props }) {
-    const [field, meta] = useField(props);
-    console.log(props, "ok","okkk");
-    
 
+
+function RadioButtons({ label, data, ...props }) {
+    const [field, meta] = useField(props);
+    // console.log(props, "ok", "okkk");
+    console.log(field);
+    console.log(meta);
+    console.log(data);
+    
     return (
         <div>
             <FormControl>
-                <FormLabel >Gender</FormLabel>
+                <FormLabel id={`${label}-label`}>{label}</FormLabel>
                 <RadioGroup
                     {...field}
-                    {...props}
-                >
-                </RadioGroup>
-                {
-                    radiobuttonsData.map((v, i) => (
-                        <FormControlLabel
-                            key={v.value}
-                            value={v.value}
-                            control={<Radio />}
-                            label={v.label}
-                        />
-                    ))}
+                    aria-labelledby={`${label}-label`}
 
+                >
+                    {
+                        data.map((v)=>(
+                            <FormControlLabel value={v.value} control={<Radio />} label={v.label} />
+                        ))
+                    }
+                </RadioGroup>
                 <p className='error'>
                     {
-                        meta.gender && meta.touched ? meta.gender : ''
+                       meta.error && meta.touched ? meta.error : ''
                     }
                 </p>
             </FormControl>

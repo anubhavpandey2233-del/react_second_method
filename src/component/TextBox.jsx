@@ -4,8 +4,8 @@ import React from 'react';
 
 function TextBox({ label, type, ContryData = [], ...props }) {
     const [field, meta] = useField(props);
-    console.log(props);
-    console.log(ContryData);
+    // console.log(props);
+    // console.log(ContryData);
 
 
 

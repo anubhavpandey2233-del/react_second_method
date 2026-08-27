@@ -267,26 +267,7 @@ function ValidationYupFormik(props) {
                                     />} label="Criket"
 
                                 />
-                                <FormControlLabel
-
-                                    control={<Checkbox
-                                        name='hobby'
-                                        value='Reading'
-                                        checked={values.hobby.includes('Reading')}
-                                        onChange={(e) => {
-                                            const { checked, value } = e.target
-
-                                            console.log(checked, value);
-
-                                            if (checked) {
-                                                setFieldValue("hobby", [...values.hobby, value])
-                                            } else {
-                                                setFieldValue("hobby", values.hobby?.filter(v => v != value))
-                                            }
-                                        }}
-                                    />} label="Reading"
-
-                                />
+                                
                                 <FormControlLabel
 
                                     control={<Checkbox
