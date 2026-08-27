@@ -4,7 +4,7 @@ import React from 'react';
 
 function RadioButtons({ label, radiobuttonsData, ...props }) {
     const [field, meta] = useField(props);
-    console.log(props);
+    console.log(props, "ok");
     
 
     return (
