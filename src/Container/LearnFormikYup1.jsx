@@ -1,10 +1,11 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
 import TextBox from '../component/TextBox';
-import { array, object, string } from 'yup';
+import { array, boolean, object, string } from 'yup';
 import RadioButtons from '../component/RadioButtons';
 import CustomCheckBox from '../component/CustomCheckBox';
 import FileUpload from '../component/FileUpload';
+import Active from '../component/Active';
 
 function LearnFormikYup1(props) {
 
@@ -26,6 +27,7 @@ function LearnFormikYup1(props) {
             .test("profileImg", "Plese select files under 2MB", function (val) {
                 return val.every((v) => v.size < 1 * 1024 * 1024)
             }),
+        active:boolean().oneOf([true],"Active")
     })
 
     const ContryData = [
@@ -56,7 +58,8 @@ function LearnFormikYup1(props) {
                 country: '',
                 gender: '',
                 hobby: [],
-                profile: []
+                profile: [],
+                active:true
             }}
             validationSchema={yupSchema}
             onSubmit={(values, actions) => {
@@ -72,6 +75,7 @@ function LearnFormikYup1(props) {
                 <RadioButtons name="gender" label="gender" data={radiobuttonsData} />
                 <CustomCheckBox name="hobby" label="Hobby" data1={hobbyData} />
                 <FileUpload name="profile" multiple={true} />
+                <Active name="active" label="Active"/>
                 <br />
                 <br />
                 <button type="submit">Submit</button>
