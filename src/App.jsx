@@ -19,6 +19,7 @@ import Header from './component/Header';
 import './App.css';
 import ValidationYupFormik from './Container/ValidationYupFormik';
 import LearnFormikYup1 from './Container/LearnFormikYup1';
+import LearnGrid from './Container/LearnGrid';
 // import TodoList from './Container/TodoList';
 
 // import EmployeeData from './Container/EmployeeData';
@@ -40,6 +41,7 @@ function App(props) {
         <Route path='/products/:id' element={<Products />} />
         <Route path='/validationyupformik' element={<ValidationYupFormik />} />
         <Route path='/learnformikyup1' element={<LearnFormikYup1 />} />
+        <Route path='/muigrid' element={<LearnGrid />}/>
       </Routes>
       {/* <Muibasics/> */}
       {/* <Count/> */}
