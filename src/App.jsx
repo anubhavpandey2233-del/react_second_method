@@ -20,6 +20,9 @@ import './App.css';
 import ValidationYupFormik from './Container/ValidationYupFormik';
 import LearnFormikYup1 from './Container/LearnFormikYup1';
 import LearnGrid from './Container/LearnGrid';
+import Counter from './Container/Counter';
+import { Provider } from 'react-redux';
+import { store } from './redux/Store';
 // import TodoList from './Container/TodoList';
 
 // import EmployeeData from './Container/EmployeeData';
@@ -29,11 +32,11 @@ import LearnGrid from './Container/LearnGrid';
 
 function App(props) {
   return (
-    <div>
+    <Provider store={store}>
 
       {/* <ValidationUsingUsefield/> */}
       {/* <TodoList/> */}
-      {/* <Header /> */}
+      <Header />
 
       <Routes>
         <Route path='/count' element={<Count />} />
@@ -42,6 +45,7 @@ function App(props) {
         <Route path='/validationyupformik' element={<ValidationYupFormik />} />
         <Route path='/learnformikyup1' element={<LearnFormikYup1 />} />
         <Route path='/muigrid' element={<LearnGrid />}/>
+         <Route path='/counter' element={<Counter />}/>
       </Routes>
       {/* <Muibasics/> */}
       {/* <Count/> */}
@@ -85,7 +89,7 @@ function App(props) {
 
       {/* <AscDscTitle/> */}
       {  /* <EmployeeData/> */}
-    </div>
+    </Provider>
   );
 }
 
