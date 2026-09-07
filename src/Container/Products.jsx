@@ -8,12 +8,15 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Pagination from 'react-bootstrap/Pagination';
 import { useParams } from 'react-router';
+import { getProductt } from '../redux/action/product.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../redux/action/cart.action';
 
 
 
 function Products(props) {
 
-    const [pdata, setPdata] = useState([]);
+    // const [pdata, setPdata] = useState([]);
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('');
     const [category, setCategory] = useState([])
@@ -24,35 +27,50 @@ function Products(props) {
     console.log(id);
 
 
-    const fetchProductData = async () => {
-        const response = await fetch("https://fakestoreapi.com/products");
-        const rdata = await response.json()
-        console.log(rdata);
-        setPdata(rdata) //setData of api
+    // const fetchProductData = async () => {
+    //     const response = await fetch("https://fakestoreapi.com/products");
+    //     const rdata = await response.json()
+    //     console.log(rdata);
+    //     setPdata(rdata) //setData of api
 
-        let uniqueCategory = []
+    //     let uniqueCategory = []
 
-        rdata.map((v) => {
-            if (!uniqueCategory.includes(v.category)) {
-                uniqueCategory.push(v.category)
-            }
-        })
+    //     rdata.map((v) => {
+    //         if (!uniqueCategory.includes(v.category)) {
+    //             uniqueCategory.push(v.category)
+    //         }
+    //     })
 
-        setCategory(uniqueCategory)
+    //     setCategory(uniqueCategory)
 
+    // }
+    const dispatch = useDispatch();
+    const p = useSelector(state => state.product)
+    console.log(p.product);
+    
+
+    //reducername of index.js file
+    const cartData=useSelector(state=>state.cart)
+    console.log(cartData);
+
+
+    const product = () => {
+        dispatch(getProductt())
     }
-
-
-
+    // console.log(product);
+    
+    
     useEffect(() => {
-        fetchProductData()
+        product()
     }, [])
 
 
+
     const searchData = () => {
+
         console.log(sort);
 
-        let searchData = pdata.filter((v) => v.title.toLowerCase().includes(search.toLowerCase()) ||
+        let searchData = p.product.filter((v) => v.title.toLowerCase().includes(search.toLowerCase()) ||
             v.description.toLowerCase().includes(search.toLowerCase()) ||
             v.price.toString().includes(search)
 
@@ -173,7 +191,7 @@ function Products(props) {
 
 
                     {
-                        pdata.length === 0 ? <Spinner style={{ margin: '0 0 0 820px' }} /> :
+                        p.product.length === 0 ? <Spinner style={{ margin: '0 0 0 820px' }} /> :
                             <>
                                 {paginationPage?.map((v) => (
                                     <div className='col-3'>
@@ -185,7 +203,7 @@ function Products(props) {
                                                 <Card.Text>
                                                     {v.price}
                                                 </Card.Text>
-                                                <Button variant="primary">Add to cart</Button>
+                                                <Button variant="primary" onClick={()=>dispatch(addToCart(v.id,v.price))}>Add to cart</Button>
                                             </Card.Body>
                                         </Card>
 
