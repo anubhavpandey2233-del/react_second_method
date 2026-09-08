@@ -1,4 +1,4 @@
-import { ADD_TO_CART, INCREMENT_QTY } from "../ActionTypes";
+import { ADD_TO_CART, DECREMENT_QTY, INCREMENT_QTY } from "../ActionTypes";
 
 
 export const addToCart = (id,price) => (dispatch) => {
@@ -11,4 +11,7 @@ export const addToCart = (id,price) => (dispatch) => {
 
 export const incrementQty=(id)=>(dispatch)=>{
     dispatch({type:INCREMENT_QTY,payload:id})
+}
+export const decrementtQty=(id)=>(dispatch)=>{
+    dispatch({type:DECREMENT_QTY,payload:id})
 }

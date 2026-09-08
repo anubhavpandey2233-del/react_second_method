@@ -1,7 +1,7 @@
 import React from 'react';
 import '../assets/Css/ProductCart.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { incrementQty } from '../redux/action/cart.action';
+import { decrementtQty, incrementQty } from '../redux/action/cart.action';
 
 function ProductCart(props) {
     const cartData = useSelector(state => state.cart)
@@ -54,7 +54,7 @@ function ProductCart(props) {
                                         </div>
                                         <div className="product-bottom">
                                             <div className="quantity">
-                                                <button>−</button>
+                                                <button onClick={()=>dispatch(decrementtQty(v.id))}>−</button>
                                                 <span>{v.qty}</span>
                                                 <button onClick={()=>dispatch(incrementQty(v.id))}>+</button>
                                             </div>

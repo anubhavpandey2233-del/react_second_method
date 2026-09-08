@@ -1,4 +1,4 @@
-import { ADD_TO_CART, INCREMENT_QTY } from "../ActionTypes";
+import { ADD_TO_CART, DECREMENT_QTY, INCREMENT_QTY } from "../ActionTypes";
 
 const initialStates = {
     cart: []
@@ -46,6 +46,21 @@ export const cartReducer = (state = initialStates, action) => {
             return{
                 cart:cartDataa1
             }
+
+            case DECREMENT_QTY:
+            let cartDataa2 = [...state.cart]
+            console.log(cartDataa2);
+
+            let index2 = cartDataa2.findIndex((v) => v.pid === action.payload)
+            console.log(index2);
+
+            cartDataa2[index2].qty--;
+
+            return{
+                cart:cartDataa2
+            }
+            
+
 
         default:
             return state
