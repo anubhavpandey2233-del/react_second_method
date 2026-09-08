@@ -5,3 +5,6 @@ export const GET_PRODUCTS = "GET_PRODUCTS"
 
 export const ADD_TO_CART = "ADD_TO_CART"
 export const INCREMENT_QTY = "INCREMENT_QTY"
+export const DECREMENT_QTY = "DECREMENT_QTY"
+export const REMOVE_PRODUCT="REMOVE_PRODUCT"
+export const CART_PRIC="CART_PRIC"
