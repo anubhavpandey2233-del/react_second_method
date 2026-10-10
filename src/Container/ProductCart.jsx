@@ -1,5 +1,4 @@
 import React from 'react';
-import '../assets/Css/ProductCart.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { incrementQty, decrementtQty, removeProduct } from '../redux/action/cart.action';
 

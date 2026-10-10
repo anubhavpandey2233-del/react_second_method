@@ -24,6 +24,7 @@ import Counter from './Container/Counter';
 import { Provider } from 'react-redux';
 import { store } from './redux/Store';
 import ProductCart from './Container/ProductCart';
+import ValidationTestYupFormik from './Container/ValidationTestYupFormik';
 // import TodoList from './Container/TodoList';
 
 // import EmployeeData from './Container/EmployeeData';
@@ -33,65 +34,68 @@ import ProductCart from './Container/ProductCart';
 
 function App(props) {
   return (
-    <Provider store={store}>
+     <ValidationTestYupFormik/>
+    // <Provider store={store}>
+ 
+    //   {/* <ValidationUsingUsefield/> */}
+    //   {/* <TodoList/> */}
+    //   <Header />
 
-      {/* <ValidationUsingUsefield/> */}
-      {/* <TodoList/> */}
-      <Header />
+    //   <Routes>
+    //     <Route path='/count' element={<Count />} />
+    //     <Route path='/password' element={<Password />} />
+    //     <Route path='/products/:id' element={<Products />} />
+    //     <Route path='/validationyupformik' element={<ValidationYupFormik />} />
+    //     <Route path='/learnformikyup1' element={<LearnFormikYup1 />} />
+    //     <Route path='/muigrid' element={<LearnGrid />} />
+    //     <Route path='/counter' element={<Counter />} />
+    //     <Route path='/cart' element={<ProductCart />} />
+    //   </Routes>
+    //   {/* <Muibasics/> */}
+    //   {/* <Count/> */}
+    //   {/* <Password/> */}
 
-      <Routes>
-        <Route path='/count' element={<Count />} />
-        <Route path='/password' element={<Password />} />
-        <Route path='/products/:id' element={<Products />} />
-        <Route path='/validationyupformik' element={<ValidationYupFormik />} />
-        <Route path='/learnformikyup1' element={<LearnFormikYup1 />} />
-        <Route path='/muigrid' element={<LearnGrid />} />
-        <Route path='/counter' element={<Counter />} />
-        <Route path='/cart' element={<ProductCart />} />
-      </Routes>
-      {/* <Muibasics/> */}
-      {/* <Count/> */}
-      {/* <Password/> */}
+    //   {/* <DropDownList/> */}
 
-      {/* <DropDownList/> */}
+    //   {/* <CountryClass /> */}
+    //   {/* <hr />
+    //   <hr /> */}
+    //   {/* <PasswordClass />
+    //   <br />
+    //   <br />
+    //   <ChangeCount /> */}
 
-      {/* <CountryClass /> */}
-      {/* <hr />
-      <hr /> */}
-      {/* <PasswordClass />
-      <br />
-      <br />
-      <ChangeCount /> */}
+    //   {/* <Course />
 
-      {/* <Course />
+    //   <hr />
+    //   <hr />
 
-      <hr />
-      <hr />
-
-      <CourseClass/> */}
-
-
-      {/* <Timer /> */}
+    //   <CourseClass/> */}
 
 
+    //   {/* <Timer /> */}
 
-      {/* <TimerFunction/> */}
 
-      {/* <TimerFunctionlifecycle/> */}
 
-      {/* <Products/> */}
+    //   {/* <TimerFunction/> */}
 
-      {/* <ChangeBackground/> */}
+    //   {/* <TimerFunctionlifecycle/> */}
 
-      {/* <Theme /> */}
+    //   {/* <Products/> */}
 
-      {/* <FormData /> */}
+    //   {/* <ChangeBackground/> */}
 
-      {/* <Calculator/> */}
+    //   {/* <Theme /> */}
 
-      {/* <AscDscTitle/> */}
-      {  /* <EmployeeData/> */}
-    </Provider>
+    //   {/* <FormData /> */}
+
+    //   {/* <Calculator/> */}
+
+    //   {/* <AscDscTitle/> */}
+    //   {  /* <EmployeeData/> */}
+    // </Provider>
+
+  
   );
 }
 
