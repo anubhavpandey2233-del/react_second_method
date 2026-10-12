@@ -1,19 +1,13 @@
 import React from 'react';
-import { TextField } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import { useField } from 'formik';
 
-
-function TextBoxx({ type, label, ...props }) {
-    const [field, meta] = useField(props);
-    console.log(field);
-    console.log(props);
-    
-    
-
+function TextBoxx({ label,type, ...props }) {
+     const [field, meta] = useField(props);
     return (
         <div>
             <TextField
-                {...field}
+                 {...field}
                 {...props}
                 error={meta.error && meta.touched}
                 margin="normal"
@@ -23,7 +17,6 @@ function TextBoxx({ type, label, ...props }) {
                 fullWidth
                 helperText={meta.error && meta.touched ? meta.error : ''}
             >
-
             </TextField>
         </div>
     );
