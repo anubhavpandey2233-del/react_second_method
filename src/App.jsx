@@ -25,6 +25,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/Store';
 import ProductCart from './Container/ProductCart';
 import ValidationTestYupFormik from './Container/ValidationTestYupFormik';
+import ValidationUseFormik from './Container/ValidationUseFormik';
 // import TodoList from './Container/TodoList';
 
 // import EmployeeData from './Container/EmployeeData';
@@ -34,68 +35,73 @@ import ValidationTestYupFormik from './Container/ValidationTestYupFormik';
 
 function App(props) {
   return (
-     <ValidationTestYupFormik/>
-    // <Provider store={store}>
- 
-    //   {/* <ValidationUsingUsefield/> */}
-    //   {/* <TodoList/> */}
-    //   <Header />
+    <>
+      {/* <ValidationTestYupFormik />
+      <ValidationUseFormik /> */}
 
-    //   <Routes>
-    //     <Route path='/count' element={<Count />} />
-    //     <Route path='/password' element={<Password />} />
-    //     <Route path='/products/:id' element={<Products />} />
-    //     <Route path='/validationyupformik' element={<ValidationYupFormik />} />
-    //     <Route path='/learnformikyup1' element={<LearnFormikYup1 />} />
-    //     <Route path='/muigrid' element={<LearnGrid />} />
-    //     <Route path='/counter' element={<Counter />} />
-    //     <Route path='/cart' element={<ProductCart />} />
-    //   </Routes>
-    //   {/* <Muibasics/> */}
-    //   {/* <Count/> */}
-    //   {/* <Password/> */}
+      <Provider store={store}>
 
-    //   {/* <DropDownList/> */}
+        <ValidationTestYupFormik/>
 
-    //   {/* <CountryClass /> */}
-    //   {/* <hr />
-    //   <hr /> */}
-    //   {/* <PasswordClass />
-    //   <br />
-    //   <br />
-    //   <ChangeCount /> */}
+        {/* <ValidationUsingUsefield />
+        <TodoList />
+        <Header />
 
-    //   {/* <Course />
+        <Routes>
+          <Route path='/count' element={<Count />} />
+          <Route path='/password' element={<Password />} />
+          <Route path='/products/:id' element={<Products />} />
+          <Route path='/validationyupformik' element={<ValidationYupFormik />} />
+          <Route path='/learnformikyup1' element={<LearnFormikYup1 />} />
+          <Route path='/muigrid' element={<LearnGrid />} />
+          <Route path='/counter' element={<Counter />} />
+          <Route path='/cart' element={<ProductCart />} />
+        </Routes>
+        <Muibasics />
+        <Count />
+        <Password />
 
-    //   <hr />
-    //   <hr />
+        <DropDownList />
 
-    //   <CourseClass/> */}
+        <CountryClass />
+        <hr />
+        <hr />
+        <PasswordClass />
+        <br />
+        <br />
+        <ChangeCount />
+
+        <Course />
+
+        <hr />
+        <hr />
+
+        <CourseClass />
 
 
-    //   {/* <Timer /> */}
+        <Timer />
 
 
 
-    //   {/* <TimerFunction/> */}
+        <TimerFunction />
 
-    //   {/* <TimerFunctionlifecycle/> */}
+        <TimerFunctionlifecycle />
 
-    //   {/* <Products/> */}
+        <Products />
 
-    //   {/* <ChangeBackground/> */}
+        <ChangeBackground />
 
-    //   {/* <Theme /> */}
+        <Theme />
 
-    //   {/* <FormData /> */}
+        <FormData />
 
-    //   {/* <Calculator/> */}
+        <Calculator />
 
-    //   {/* <AscDscTitle/> */}
-    //   {  /* <EmployeeData/> */}
-    // </Provider>
+        <AscDscTitle />
+        <EmployeeData /> */}
+      </Provider>
+    </>
 
-  
   );
 }
 

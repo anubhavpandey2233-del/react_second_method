@@ -47,10 +47,10 @@ function Products(props) {
     const dispatch = useDispatch();
     const p = useSelector(state => state.product)
     console.log(p.product);
-    
+
 
     //reducername of index.js file
-    const cartData=useSelector(state=>state.cart)
+    const cartData = useSelector(state => state.cart)
     console.log(cartData);
 
 
@@ -58,8 +58,8 @@ function Products(props) {
         dispatch(getProductt())
     }
     // console.log(product);
-    
-    
+
+
     useEffect(() => {
         product()
     }, [])
@@ -203,7 +203,7 @@ function Products(props) {
                                                 <Card.Text>
                                                     {v.price}
                                                 </Card.Text>
-                                                <Button variant="primary" onClick={()=>dispatch(addToCart(v.id,v.price))}>Add to cart</Button>
+                                                <Button variant="primary" onClick={() => dispatch(addToCart(v.id, v.price))}>Add to cart</Button>
                                             </Card.Body>
                                         </Card>
 

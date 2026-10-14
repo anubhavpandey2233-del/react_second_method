@@ -1,0 +1,30 @@
+import { ADD_USER_DATA, REMOVE_USER } from "../ActionTypes";
+
+const initialStates = {
+    userData: []
+}
+
+export const formReducer = (state = initialStates, action) => {
+    console.log(action.payload, "ffffffffffff");
+    switch (action.type) {
+        case ADD_USER_DATA:
+            return {
+                userData: [...state.userData, action.payload]
+            }
+
+        case REMOVE_USER:
+
+            let fData = state.userData.filter((v) => v.id != action.payload);
+
+            console.log(fData);
+        
+            return {
+                userData: fData
+            }
+
+
+        default:
+            return state;
+    }
+
+}

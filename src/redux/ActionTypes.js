@@ -8,3 +8,7 @@ export const INCREMENT_QTY = "INCREMENT_QTY"
 export const DECREMENT_QTY = "DECREMENT_QTY"
 export const REMOVE_PRODUCT="REMOVE_PRODUCT"
 export const CART_PRIC="CART_PRIC"
+
+
+export const ADD_USER_DATA="ADD_USER_DATA"
+export const REMOVE_USER="REMOVE_USER"
