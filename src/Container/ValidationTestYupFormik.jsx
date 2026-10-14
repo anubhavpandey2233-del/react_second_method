@@ -4,20 +4,21 @@ import TextBox from '../component/TextBox';
 import { date, number, object, string } from 'yup';
 import { FaTrashCan } from "react-icons/fa6";
 import { TiPencil } from "react-icons/ti";
+import EmailTextBox from '../component/EmailTextBox';
 
 function ValidationTestYupFormik(props) {
 
     const [alldata, setAlldata] = useState([])
+    const [edit,setEdit]=useState()
 
     let yupSchema = object({
         name: string().required(),
         age: number().required().max(90, "Age must be less from 90"),
-        dob: date().required().max(new Date(), 'Age must me less than current date')
+        dob: date().required().max(new Date(), 'Age must me less than current date'),
+        email:string().required()
     })
 
     useEffect(() => {
-
-
         let uData = JSON.parse(localStorage.getItem("UserData"))
 
         if (uData) {
@@ -26,12 +27,33 @@ function ValidationTestYupFormik(props) {
         console.log(uData);
     }, [])
 
-    const handleDelete = () => {
+    const handleDelete = (id) => {
+        let delData=alldata.filter((v)=>v.id!=id)
+
+        console.log(delData);
+
+        setAlldata(delData)
+
+        localStorage.setItem("UserData",JSON.stringify(delData))
+
+        // let delIndex = alldata.filter((v) => v.id == id)
+        // let x = [...alldata]
+        // console.log( delIndex);
+        // x.splice( delIndex, 1)
+        // console.log(x);
+
+        // setAlldata(x)
+
+        // localStorage.setItem("UserData", JSON.stringify(x))
 
     }
 
-    const handleEdit = () => {
+    const handleEdit = (id) => {
+        let editIndex=alldata.find((v)=>v.id==id)
+        console.log(editIndex);
 
+        setEdit(id)
+        
     }
 
     return (
@@ -43,27 +65,24 @@ function ValidationTestYupFormik(props) {
                     name: '',
                     age: '',
                     dob: '',
+                    email:''
                 }}
                 validationSchema={yupSchema}
                 onSubmit={(values, actions) => {
                     console.log(values);
-                    let UserData = {
+                    let obj = {
                         id: crypto.randomUUID(),
                         ...values
                     }
 
-                    localStorage.setItem("UserData", JSON.stringify([values]))
+                    let localdata = JSON.parse(localStorage.getItem("UserData"))
 
-                    let newData = JSON.parse(localStorage.getItem("UserData"))
 
-                    newData.push(values)
+                    localdata.push(obj)
 
-                    console.log(newData);
+                    localStorage.setItem("UserData", JSON.stringify(localdata))
 
-                    localStorage.setItem("UserData", JSON.stringify(newData))
-
-                    setAlldata([...newData])
-
+                    setAlldata(localdata)
 
                 }}
             >
@@ -71,6 +90,7 @@ function ValidationTestYupFormik(props) {
                     <TextBox type="text" label="name" name="name" />
                     <TextBox type="text" label="age" name="age" />
                     <TextBox type="date" label="" name="dob" />
+                    <EmailTextBox type="email" label="email" name="email"/>
                     <button type='submit'>Submit</button>
                 </Form>
             </Formik>
@@ -81,6 +101,7 @@ function ValidationTestYupFormik(props) {
                         <th>Name</th>
                         <th>Age</th>
                         <th>Dob</th>
+                        <th>Email</th>
                         <th>Actions</th>
                     </tr>
                     {
@@ -90,6 +111,7 @@ function ValidationTestYupFormik(props) {
                                 <td>{v.name}</td>
                                 <td>{v.age}</td>
                                 <td>{v.dob}</td>
+                                <td>{v.email}</td>
                                 <td>
                                     <FaTrashCan onClick={() => handleDelete(v.id)} />
                                     <TiPencil onClick={() => handleEdit(v.id)} />
@@ -101,6 +123,7 @@ function ValidationTestYupFormik(props) {
 
             </div>
         </div>
+
     );
 }
 
