@@ -12,3 +12,4 @@ export const CART_PRIC="CART_PRIC"
 
 export const ADD_USER_DATA="ADD_USER_DATA"
 export const REMOVE_USER="REMOVE_USER"
+export const UPDATE_USER="UPDATE_USER"

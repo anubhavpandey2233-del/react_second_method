@@ -6,7 +6,7 @@ import { FaTrashCan } from "react-icons/fa6";
 import { TiPencil } from "react-icons/ti";
 import EmailTextBox from '../component/EmailTextBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { adduser, removeruser } from '../redux/action/form.action';
+import { adduser, removeruser, updateUser } from '../redux/action/form.action';
 
 function ValidationTestYupFormik(props) {
 
@@ -20,18 +20,25 @@ function ValidationTestYupFormik(props) {
         email: string().required()
     })
 
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
-    const userAddData=useSelector(state=>state.formData)
+    const userAddData = useSelector(state => state.formData)
 
     console.log(userAddData);
 
-    const handleDelete=(id)=>{
+    const handleDelete = (id) => {
         console.log(id);
-        
+
         dispatch(removeruser(id))
     }
-    
+    const handleEdit = (id, FormikData) => {
+        let editData = userAddData.userData.find((v) => v.id === id);
+
+        FormikData.setValues(editData);
+
+        setEdit(id); 
+    }
+
     // useEffect(() => {
     //     let uData = JSON.parse(localStorage.getItem("UserData"))
 
@@ -85,50 +92,15 @@ function ValidationTestYupFormik(props) {
                 }}
                 validationSchema={yupSchema}
                 onSubmit={(values, { resetForm }) => {
-                    console.log(values);
+                    if (edit !== null) {
+                        dispatch(updateUser({...values,id: edit}));
 
-                   dispatch(adduser({...values, id: crypto.randomUUID()}))
+                        setEdit(null);
+                    } else {
+                        dispatch(adduser({...values,id: crypto.randomUUID()  }));
+                    }
 
-                    // let obj = {
-                    //     id: crypto.randomUUID(),
-                    //     ...values
-                    // }
-
-                    // let localdata = JSON.parse(localStorage.getItem("UserData"))
-
-                    // if (edit === null) {
-                    //     if (localdata) {
-                    //         localdata.push(obj)
-                    //         localStorage.setItem("UserData", JSON.stringify(localdata))
-                    //         setAlldata(localdata)
-                    //     } else {
-                    //         localStorage.setItem("UserData", JSON.stringify([obj]))
-                    //         setAlldata([obj])
-                    //     }
-                    // } else {
-                    //     let index = alldata.findIndex((v) => v.id === edit)
-
-                    //     console.log(index);
-
-                    //     localdata[index]=obj
-
-                    //     localStorage.setItem("UserData", JSON.stringify(localdata))
-                    //     setAlldata(localdata)
-
-                    //     setEdit(null)
-
-                    // }
-
-                    // resetForm();
-
-
-
-                    // localdata.push(obj)
-
-                    // localStorage.setItem("UserData", JSON.stringify(localdata))
-
-                    // setAlldata(localdata)
-
+                    resetForm();
                 }}
             >
                 {
@@ -162,7 +134,7 @@ function ValidationTestYupFormik(props) {
                                                 <td>{v.email}</td>
                                                 <td>
                                                     <FaTrashCan onClick={() => handleDelete(v.id)} />
-                                                    <TiPencil onClick={() => handleEdit(v.id)} />
+                                                    <TiPencil onClick={() => handleEdit(v.id, FormikData)} />
                                                 </td>
                                             </tr>
                                         ))
