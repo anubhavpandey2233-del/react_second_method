@@ -21,11 +21,11 @@ export const removeruser = (id) => (dispatch) => {
     }
 }
 
-export const updateUser=(id)=>(dispatch)=>{
+export const updateUser=(data)=>(dispatch)=>{
     try {
-        console.log(id);
+        console.log(data);
         
-        dispatch({type:UPDATE_USER,payload:id})
+        dispatch({type:UPDATE_USER,payload:data})
     } catch (error) {
         console.log("error in updateuser");
         

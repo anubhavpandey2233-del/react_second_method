@@ -23,7 +23,7 @@ export const formReducer = (state = initialStates, action) => {
             }
 
         case UPDATE_USER:
-            let fIndex = state.userData.findIndex((v) => v.id == action.payload);
+            let fIndex = state.userData.findIndex((v) => v.id == action.payload.id);
 
             console.log(fIndex);
 

@@ -93,7 +93,8 @@ function ValidationTestYupFormik(props) {
                 validationSchema={yupSchema}
                 onSubmit={(values, { resetForm }) => {
                     if (edit !== null) {
-                        dispatch(updateUser({...values,id: edit}));
+                        console.log("dsad", values);
+                        dispatch(updateUser(values));
 
                         setEdit(null);
                     } else {
