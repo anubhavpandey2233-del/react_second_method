@@ -26,6 +26,7 @@ import { store } from './redux/Store';
 import ProductCart from './Container/ProductCart';
 import ValidationTestYupFormik from './Container/ValidationTestYupFormik';
 import ValidationUseFormik from './Container/ValidationUseFormik';
+import QuizzTest from './Container/QuizzTest';
 // import TodoList from './Container/TodoList';
 
 // import EmployeeData from './Container/EmployeeData';
@@ -38,10 +39,11 @@ function App(props) {
     <>
       {/* <ValidationTestYupFormik />
       <ValidationUseFormik /> */}
+      <QuizzTest/>
 
       <Provider store={store}>
 
-        <ValidationTestYupFormik/>
+        {/* <ValidationTestYupFormik/> */}
 
         {/* <ValidationUsingUsefield />
         <TodoList />

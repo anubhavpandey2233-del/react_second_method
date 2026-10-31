@@ -27,7 +27,7 @@ function LearnFormikYup1(props) {
             .test("profileImg", "Plese select files under 2MB", function (val) {
                 return val.every((v) => v.size < 1 * 1024 * 1024)
             }),
-        active:boolean().oneOf([true],"Active")
+        active: boolean().oneOf([true], "Active")
     })
 
     const ContryData = [
@@ -59,7 +59,7 @@ function LearnFormikYup1(props) {
                 gender: '',
                 hobby: [],
                 profile: [],
-                active:true
+                active: true
             }}
             validationSchema={yupSchema}
             onSubmit={(values, actions) => {
@@ -75,7 +75,7 @@ function LearnFormikYup1(props) {
                 <RadioButtons name="gender" label="gender" data={radiobuttonsData} />
                 <CustomCheckBox name="hobby" label="Hobby" data1={hobbyData} />
                 <FileUpload name="profile" multiple={true} />
-                <Active name="active" label="Active"/>
+                <Active name="active" label="Active" />
                 <br />
                 <br />
                 <button type="submit">Submit</button>
