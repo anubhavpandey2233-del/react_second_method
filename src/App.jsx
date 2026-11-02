@@ -27,6 +27,7 @@ import ProductCart from './Container/ProductCart';
 import ValidationTestYupFormik from './Container/ValidationTestYupFormik';
 import ValidationUseFormik from './Container/ValidationUseFormik';
 import QuizzTest from './Container/QuizzTest';
+import QuizzApp from './Container/QuizzApp';
 // import TodoList from './Container/TodoList';
 
 // import EmployeeData from './Container/EmployeeData';
@@ -39,7 +40,9 @@ function App(props) {
     <>
       {/* <ValidationTestYupFormik />
       <ValidationUseFormik /> */}
-      <QuizzTest/>
+      {/* <QuizzTest/> */}
+
+        <QuizzApp/>
 
       <Provider store={store}>
 
